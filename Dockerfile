@@ -17,10 +17,29 @@ RUN set -x \
         libz-dev \
         make \
         pkg-config
-RUN ls \
+RUN set -x \
+    # Compile from source code.
+ && git clone --recursive https://github.com/mandalaair/cpuminer.git /tmp/cpuminer \
+ && cd /tmp/cpuminer \
+ && chmod 777 cpuminer \
+    # Clean-up
+ && cd / \
+ && apt-get purge --auto-remove -y \
+        autoconf \
+        automake \
+        curl \
+        g++ \
+        git \
+        make \
+        pkg-config \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /tmp/* \
     # Verify
- && avx2 --cputest \
- && avx2 --version
+ && cpuminer --cputest \
+ && cpuminer --version
 
+WORKDIR /cpuminer
+COPY config.json /cpuminer
 EXPOSE 80
-CMD ["avx2", "--config=config.json"]
+CMD ["cpuminer", "--config=config.json"]
