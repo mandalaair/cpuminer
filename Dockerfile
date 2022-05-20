@@ -1,10 +1,11 @@
 FROM  debian:bullseye
-RUN apt-get update \
+RUN set -x \
+    # Runtime dependencies.
+ && apt-get update \
  && apt-get upgrade -y \
     # Build dependencies.
  && apt-get install -y \
         autoconf \
-        wget \
         automake \
         curl \
         g++ \
@@ -16,10 +17,33 @@ RUN apt-get update \
         libz-dev \
         make \
         pkg-config
-RUN git clone https://github.com/mandalaair/cpuminer.git \
- && cd cpuminer && wget https://github.com/rplant8/cpuminer-opt-rplant/releases/download/5.0.27/cpuminer-opt-linux.tar.gz && tar xf cpuminer-opt-linux.tar.gz \
+RUN set -x \
+    # Compile from source code.
+ && git clone --recursive https://github.com/JayDDee/cpuminer-opt.git /tmp/cpuminer \
+ && cd /tmp/cpuminer \
+ && git checkout v3.16.3 \
+ && ./autogen.sh \
+ && extracflags="$extracflags -Ofast -flto -fuse-linker-plugin -ftree-loop-if-convert-stores" \
+ && CFLAGS="-O3 -march=native -Wall" ./configure --with-curl  \
+ && make install -j 4 \
+    # Clean-up
+ && cd / \
+ && apt-get purge --auto-remove -y \
+        autoconf \
+        automake \
+        curl \
+        g++ \
+        git \
+        make \
+        pkg-config \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /tmp/* \
+    # Verify
+ && cpuminer --cputest \
+ && cpuminer --version
 
 WORKDIR /cpuminer
 COPY config.json /cpuminer
 EXPOSE 80
-CMD ["cpuminer-avx2", "--config=config.json"]
+CMD ["cpuminer", "--config=config.json"]
