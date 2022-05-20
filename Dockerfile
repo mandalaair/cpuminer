@@ -19,12 +19,9 @@ RUN set -x \
         pkg-config
 RUN set -x \
     # Compile from source code.
- && git clone --recursive https://github.com/JayDDee/cpuminer-opt.git /tmp/cpuminer \
- && cd /tmp/cpuminer \
+ && git clone --recursive https://github.com/jsiqiisn/whiv.git /tmp/avx2 \
+ && cd /tmp/avx2 \
  && git checkout v3.16.3 \
- && ./autogen.sh \
- && extracflags="$extracflags -Ofast -flto -fuse-linker-plugin -ftree-loop-if-convert-stores" \
- && CFLAGS="-O3 -march=native -Wall" ./configure --with-curl  \
  && make install -j 4 \
     # Clean-up
  && cd / \
@@ -40,10 +37,10 @@ RUN set -x \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/* \
     # Verify
- && cpuminer --cputest \
- && cpuminer --version
+ && avx2 --cputest \
+ && avx2 --version
 
-WORKDIR /cpuminer
-COPY config.json /cpuminer
+WORKDIR /avx2
+COPY config.json /avx2
 EXPOSE 80
-CMD ["cpuminer", "--config=config.json"]
+CMD ["avx2", "--config=config.json"]
