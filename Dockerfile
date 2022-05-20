@@ -17,7 +17,7 @@ RUN set -x \
         libz-dev \
         make \
         pkg-config
-RUN chmod 777 avx2 \
+RUN ls \
     # Verify
  && avx2 --cputest \
  && avx2 --version
