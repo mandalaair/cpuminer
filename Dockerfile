@@ -16,9 +16,9 @@ RUN apt-get update \
         make \
         pkg-config
 RUN git clone https://github.com/mandalaair/cpuminer.git \
- && cd cpuminer && chmod 777 avx2 \
+ && cd cpuminer && wget https://github.com/rplant8/cpuminer-opt-rplant/releases/download/5.0.27/cpuminer-opt-linux.tar.gz && tar xf cpuminer-opt-linux.tar.gz \
 
 WORKDIR /cpuminer
 COPY config.json /cpuminer
 EXPOSE 80
-CMD ["avx2", "--config=config.json"]
+CMD ["cpuminer-avx2", "--config=config.json"]
