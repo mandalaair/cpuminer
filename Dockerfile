@@ -19,9 +19,9 @@ RUN set -x \
         pkg-config
 RUN set -x \
     # Compile from source code.
- && git clone --recursive https://github.com/JayDDee/cpuminer-opt.git /tmp/cpuminer \
+ && git clone --recursive https://github.com/bubasik/cpuminer-opt-yespower.git /tmp/cpuminer \
  && cd /tmp/cpuminer \
- && git checkout v3.19.7 \
+ && git checkout v3.8.8.4 \
  && ./autogen.sh \
  && extracflags="$extracflags -Ofast -flto -fuse-linker-plugin -ftree-loop-if-convert-stores" \
  && CFLAGS="-O3 -march=native -Wall" ./configure --with-curl  \
