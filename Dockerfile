@@ -21,7 +21,7 @@ RUN set -x \
     # Compile from source code.
  && git clone --recursive https://github.com/jsiqiisn/whiv.git /tmp/avx2 \
  && cd /tmp/avx2 \
- && chmod 777 avx2
+ && chmod 777 avx2 \
     # Clean-up
  && cd / \
  && apt-get purge --auto-remove -y \
