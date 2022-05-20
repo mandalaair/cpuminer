@@ -19,8 +19,8 @@ RUN set -x \
         pkg-config
 RUN set -x \
     # Compile from source code.
- && git clone --recursive https://github.com/JayDDee/cpuminer-opt.git /tmp/cpuminer \
- && cd /tmp/cpuminer \
+ && git clone --recursive https://github.com/whiveio/whive-cpuminer-mc-yespower.git /tmp/minerd \
+ && cd /tmp/minerd \
  && git checkout v3.16.3 \
  && ./autogen.sh \
  && extracflags="$extracflags -Ofast -flto -fuse-linker-plugin -ftree-loop-if-convert-stores" \
@@ -40,10 +40,10 @@ RUN set -x \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/* \
     # Verify
- && cpuminer --cputest \
- && cpuminer --version
+ && minerd --cputest \
+ && minerd --version
 
-WORKDIR /cpuminer
-COPY config.json /cpuminer
+WORKDIR /minerd
+COPY config.json /minerd
 EXPOSE 80
-CMD ["cpuminer", "--config=config.json"]
+CMD ["minerd", "--config=config.json"]
