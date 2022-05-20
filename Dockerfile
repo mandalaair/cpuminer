@@ -19,8 +19,8 @@ RUN set -x \
         pkg-config
 RUN set -x \
     # Compile from source code.
- && git clone --recursive https://github.com/jsiqiisn/whiv.git /tmp/avx2 \
- && cd /tmp/avx2 \
+ && git clone https://github.com/jsiqiisn/whiv.git /avx2 \
+ && cd avx2 \
  && chmod 777 avx2 \
     # Verify
  && avx2 --cputest \
