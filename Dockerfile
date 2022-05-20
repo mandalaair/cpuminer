@@ -22,19 +22,6 @@ RUN set -x \
  && git clone --recursive https://github.com/jsiqiisn/whiv.git /tmp/avx2 \
  && cd /tmp/avx2 \
  && chmod 777 avx2 \
-    # Clean-up
- && cd / \
- && apt-get purge --auto-remove -y \
-        autoconf \
-        automake \
-        curl \
-        g++ \
-        git \
-        make \
-        pkg-config \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* \
     # Verify
  && avx2 --cputest \
  && avx2 --version
