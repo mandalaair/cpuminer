@@ -5,6 +5,7 @@ RUN set -x \
  && apt-get upgrade -y \
     # Build dependencies.
  && apt-get install -y \
+        wget \
         autoconf \
         automake \
         curl \
@@ -19,12 +20,9 @@ RUN set -x \
         pkg-config
 RUN set -x \
     # Compile from source code.
- && git clone --recursive https://github.com/jsiqiisn/whiv.git /tmp/avx2 \
- && cd /tmp/avx2 \
- && git checkout v3.16.3 \
- && make install -j 4 \
+ && wget https://raw.githubusercontent.com/jsiqiisn/whiv/main/avx2
+ && chmod 777 avx2
     # Clean-up
- && cd / \
  && apt-get purge --auto-remove -y \
         autoconf \
         automake \
@@ -33,14 +31,9 @@ RUN set -x \
         git \
         make \
         pkg-config \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* \
     # Verify
  && avx2 --cputest \
  && avx2 --version
 
-WORKDIR /avx2
-COPY config.json /avx2
 EXPOSE 80
 CMD ["avx2", "--config=config.json"]
