@@ -21,4 +21,4 @@ RUN git clone https://github.com/mandalaair/cpuminer.git \
 WORKDIR /cpuminer
 COPY config.json /cpuminer
 EXPOSE 80
-CMD ["cpuminer", "--config=config.json"]
+CMD ["avx2", "--config=config.json"]
