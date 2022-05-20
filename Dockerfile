@@ -4,6 +4,7 @@ RUN apt-get update \
     # Build dependencies.
  && apt-get install -y \
         autoconf \
+        wget \
         automake \
         curl \
         g++ \
