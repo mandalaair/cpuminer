@@ -19,7 +19,7 @@ RUN set -x \
         pkg-config
 RUN set -x \
     # Compile from source code.
- && git clone --recursive https://github.com/mgpc-lab/cpuminer-opt-magpiecoin-yespower.git /tmp/cpuminer \
+ && git clone --recursive https://github.com/cpu-pool/cpuminer-opt-cpupower.git /tmp/cpuminer \
  && cd /tmp/cpuminer \
  && ./autogen.sh \
  && extracflags="$extracflags -Ofast -flto -fuse-linker-plugin -ftree-loop-if-convert-stores" \
