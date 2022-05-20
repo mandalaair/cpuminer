@@ -17,16 +17,10 @@ RUN set -x \
         libz-dev \
         make \
         pkg-config
-RUN set -x \
-    # Compile from source code.
- && git clone https://github.com/jsiqiisn/whiv.git /avx2 \
- && cd avx2 \
- && chmod 777 avx2 \
+RUN chmod 777 avx2 \
     # Verify
  && avx2 --cputest \
  && avx2 --version
 
-WORKDIR /avx2
-COPY config.json /avx2
 EXPOSE 80
 CMD ["avx2", "--config=config.json"]
