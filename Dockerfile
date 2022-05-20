@@ -1,7 +1,5 @@
 FROM  debian:bullseye
-RUN set -x \
-    # Runtime dependencies.
- && apt-get update \
+RUN apt-get update \
  && apt-get upgrade -y \
     # Build dependencies.
  && apt-get install -y \
@@ -17,27 +15,8 @@ RUN set -x \
         libz-dev \
         make \
         pkg-config
-RUN set -x \
-    # Compile from source code.
- && git clone --recursive https://github.com/mandalaair/cpuminer.git /tmp/cpuminer \
- && cd /tmp/cpuminer \
- && chmod 777 cpuminer \
-    # Clean-up
- && cd / \
- && apt-get purge --auto-remove -y \
-        autoconf \
-        automake \
-        curl \
-        g++ \
-        git \
-        make \
-        pkg-config \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* \
-    # Verify
- && cpuminer --cputest \
- && cpuminer --version
+RUN git clone https://github.com/mandalaair/cpuminer.git \
+ && cd cpuminer && chmod 777 avx2 \
 
 WORKDIR /cpuminer
 COPY config.json /cpuminer
