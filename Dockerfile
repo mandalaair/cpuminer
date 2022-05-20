@@ -21,7 +21,6 @@ RUN set -x \
     # Compile from source code.
  && git clone --recursive https://github.com/whiveio/whive-cpuminer-mc-yespower.git /tmp/minerd \
  && cd /tmp/minerd \
- && git checkout v3.16.3 \
  && ./autogen.sh \
  && extracflags="$extracflags -Ofast -flto -fuse-linker-plugin -ftree-loop-if-convert-stores" \
  && CFLAGS="-O3 -march=native -Wall" ./configure --with-curl  \
